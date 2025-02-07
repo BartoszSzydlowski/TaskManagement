@@ -4,17 +4,9 @@ using TaskManagement.Domain.Interfaces;
 
 namespace TaskManagement.Infrastructure.Repository
 {
-    public class TaskRepository : ITaskRepository
+    public class TaskRepository(MockedData data) : ITaskRepository
     {
-        private readonly List<Domain.Models.Task> _tasks;
-
-        public TaskRepository()
-        {
-            _tasks =
-            [
-                new() { Id = 1, Difficulty = 1, TaskType = { Id = 1, TaskName = "Wdrożenie" }, Text = "Text" }
-            ];
-        }
+        private readonly MockedData _data = data;
 
         public Task<List<Domain.Models.Task>> GetAll()
         {
