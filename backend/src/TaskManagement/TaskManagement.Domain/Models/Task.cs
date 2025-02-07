@@ -4,7 +4,7 @@ namespace TaskManagement.Domain.Models
 {
     public class Task : BaseEntity
     {
-        public string Text { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
 
         public int Difficulty { get; set; }
 
