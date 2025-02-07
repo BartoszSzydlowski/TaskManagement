@@ -1,6 +1,4 @@
-﻿using TaskManagement.Common;
-
-namespace TaskManagement.Domain.Models
+﻿namespace TaskManagement.Domain.Models
 {
     public class DeploymentTask : BaseEntity
     {
@@ -9,7 +7,5 @@ namespace TaskManagement.Domain.Models
         public string ServiceList {  get; set; } = string.Empty;
 
         public string ServerList { get; set; } = string.Empty;
-
-        public Status Status { get; set; }
     }
 }

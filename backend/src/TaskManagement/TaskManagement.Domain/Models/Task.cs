@@ -1,4 +1,6 @@
-﻿namespace TaskManagement.Domain.Models
+﻿using TaskManagement.Common;
+
+namespace TaskManagement.Domain.Models
 {
     public class Task : BaseEntity
     {
@@ -8,6 +10,8 @@
 
         public TaskType TaskType { get; set; } = new();
 
-        public User User { get; set; } = new();
+        public User? User { get; set; } = new();
+
+        public Status Status { get; set; }
     }
 }

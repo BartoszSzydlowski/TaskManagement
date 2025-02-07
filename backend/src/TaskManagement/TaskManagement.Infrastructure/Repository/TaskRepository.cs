@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TaskManagement.Domain.Interfaces;
+﻿using TaskManagement.Domain.Interfaces;
 
 namespace TaskManagement.Infrastructure.Repository
 {
