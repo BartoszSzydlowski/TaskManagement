@@ -8,7 +8,9 @@ namespace TaskManagement.Infrastructure
 
         public List<TaskType> TaskTypes { get; set; } =
         [
-            new() { Id = 1, Name = "Implementation" },
+            new() { Id = 1, Name = "Deployment" },
+            new() { Id = 2, Name = "Maintenance" },
+            new() { Id = 3, Name = "Implementation" },
         ];
 
         public List<User> Users { get; set; } = [];
