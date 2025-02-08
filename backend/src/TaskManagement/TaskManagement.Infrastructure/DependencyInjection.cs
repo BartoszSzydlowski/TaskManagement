@@ -9,6 +9,7 @@ namespace TaskManagement.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddSingleton<MockedData>();
             return services;
         }
     }
