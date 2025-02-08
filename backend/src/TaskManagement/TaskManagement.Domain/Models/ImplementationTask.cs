@@ -1,9 +1,7 @@
 ﻿namespace TaskManagement.Domain.Models
 {
-    public class ImplementationTask : BaseEntity
+    public class ImplementationTask : BaseTask
     {
-        public TaskType TaskType { get; set; } = new();
-
         public string Content { get; set; } = string.Empty;
     }
 }
