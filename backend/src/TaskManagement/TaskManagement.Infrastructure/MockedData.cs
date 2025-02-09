@@ -42,16 +42,19 @@ namespace TaskManagement.Infrastructure
             DeploymentTasks =
             [
                 new DeploymentTask { Id = 1, Content = "Deploying API on Azure", Difficulty = 1, Scope = "Deploy API to Microsoft Azure with URL mydomain.com", Status = Status.ToDo, TaskType = TaskTypes[0], User = Users[0] },
+                new DeploymentTask { Id = 6, Content = "Deploying API on AWS", Difficulty = 3, Scope = "Deploy API to Microsoft Azure with URL mydomain.com", Status = Status.Done, TaskType = TaskTypes[0], User = Users[0] },
             ];
 
             MaintenanceTasks =
             [
                 new MaintenanceTask { Id = 2, Content = "Check services on server", Difficulty = 5, DueDate = DateTime.Now, ServerList = "Two domains", ServiceList = "Example server list", Status = Status.ToDo, TaskType = TaskTypes[1] },
+                new MaintenanceTask { Id = 5, Content = "Check services on server", Difficulty = 5, DueDate = DateTime.Now, ServerList = "Two domains", ServiceList = "Example server list", Status = Status.ToDo, TaskType = TaskTypes[1] },
             ];
 
             ImplementationTasks =
             [
                 new ImplementationTask { Id = 3, Content = "Create method to return all clients data", Difficulty = 2, TaskContent = "Implement using DDD a method", Status = Status.Done, TaskType = TaskTypes[2], User = Users[0] },
+                new ImplementationTask { Id = 4, Content = "Create method to add client to database", Difficulty = 5, TaskContent = "Implement using DDD a method", Status = Status.ToDo, TaskType = TaskTypes[2] },
             ];
 
             Tasks = [.. DeploymentTasks, .. MaintenanceTasks, .. ImplementationTasks];
