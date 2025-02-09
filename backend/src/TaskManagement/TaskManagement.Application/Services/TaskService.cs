@@ -6,19 +6,19 @@ using TaskManagement.Domain.Interfaces;
 
 namespace TaskManagement.Application.Services
 {
-    public class TaskService(ITaskRepository repository, IMapper mapper) : ITaskService
+    public class TaskService<T>(ITaskRepository<Domain.Models.Task> repository, IMapper mapper) : ITaskService<T> where T : TaskViewModel
     {
-        private readonly ITaskRepository _repository = repository;
+        private readonly ITaskRepository<Domain.Models.Task> _repository = repository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<PagedResponse<TaskViewModel>> GetSortedByDifficultyDesc(int? userId, int pageNumber, int pageSize)
+        public async Task<PagedResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, int taskTypeId, int? userId)
         {
-            var data = await _repository.GetSortedByDifficultyDesc(userId, pageNumber, pageSize);
-            var count = await _repository.GetTotalCount(userId);
+            var data = await _repository.GetFilteredByTaskTypeAndSortedByDifficultyDesc(pageNumber, pageSize, taskTypeId, userId);
+            var count = await _repository.GetTotalCount(taskTypeId, userId);
 
-            return new PagedResponse<TaskViewModel>
+            return new PagedResponse<T>
             {
-                Data = _mapper.Map<List<TaskViewModel>>(data),
+                Data = _mapper.Map<List<T>>(data),
                 TotalCount = count,
                 PageNumber = pageNumber,
                 PageSize = pageSize

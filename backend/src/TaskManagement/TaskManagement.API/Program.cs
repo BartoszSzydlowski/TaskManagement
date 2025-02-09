@@ -1,4 +1,6 @@
+using TaskManagement.API.Controllers;
 using TaskManagement.Application;
+using TaskManagement.Application.ViewModels.TaskViewModel;
 using TaskManagement.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

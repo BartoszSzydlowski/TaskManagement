@@ -3,8 +3,8 @@ using TaskManagement.Application.ViewModels.TaskViewModel;
 
 namespace TaskManagement.Application.Interfaces
 {
-    public interface ITaskService
+    public interface ITaskService<T> where T : TaskViewModel
     {
-        Task<PagedResponse<TaskViewModel>> GetSortedByDifficultyDesc(int? userId, int pageNumber, int pageSize);
+        Task<PagedResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, int taskTypeId, int? userId);
     }
 }
