@@ -1,15 +1,7 @@
-﻿using TaskManagement.Common;
-
-namespace TaskManagement.Domain.Models
+﻿namespace TaskManagement.Domain.Models
 {
-    public class DeploymentTask : BaseEntity
+    public class DeploymentTask : BaseTask
     {
-        public TaskType TaskType { get; set; } = new();
-
-        public string ServiceList {  get; set; } = string.Empty;
-
-        public string ServerList { get; set; } = string.Empty;
-
-        public Status Status { get; set; }
+        public string Scope { get; set; } = string.Empty;
     }
 }
