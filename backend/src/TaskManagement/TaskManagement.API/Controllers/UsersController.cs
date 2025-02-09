@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace TaskManagement.API.Controllers
 {
@@ -7,6 +6,5 @@ namespace TaskManagement.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-
     }
 }
