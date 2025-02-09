@@ -2,14 +2,8 @@
 {
     public interface ITaskRepository
     {
-        Task<List<Models.Task>> GetAll();
+        Task<List<Models.Task>> GetSortedByDifficultyDesc(int? userId, int pageNumber, int pageSize);
 
-        Task<Models.Task> Get(int id);
-
-        Task Add(Models.Task task);
-
-        Task Update(Models.Task task);
-
-        Task Delete(int id);
+        Task<int> GetTotalCount(int? userId);
     }
 }

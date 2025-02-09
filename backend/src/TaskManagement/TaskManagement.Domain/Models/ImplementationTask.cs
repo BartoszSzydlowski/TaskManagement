@@ -1,7 +1,7 @@
 ﻿namespace TaskManagement.Domain.Models
 {
-    public class ImplementationTask : BaseTask
+    public class ImplementationTask : Task
     {
-        public string Content { get; set; } = string.Empty;
+        public string TaskContent { get; set; } = string.Empty;
     }
 }

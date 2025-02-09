@@ -2,9 +2,9 @@
 using TaskManagement.Application.Mapping;
 using Entity = TaskManagement.Domain.Models;
 
-namespace TaskManagement.Application.ViewModels.User
+namespace TaskManagement.Application.ViewModels.TaskViewModel
 {
-    public class UserTypeViewModel : IMap
+    public class TaskTypeViewModel : IMap
     {
         public int Id { get; set; }
 
@@ -12,7 +12,7 @@ namespace TaskManagement.Application.ViewModels.User
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entity.UserType, UserTypeViewModel>();
+            profile.CreateMap<Entity.TaskType, TaskTypeViewModel>();
         }
     }
 }
