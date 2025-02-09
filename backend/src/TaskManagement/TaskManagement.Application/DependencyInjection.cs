@@ -9,7 +9,7 @@ namespace TaskManagement.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped(typeof(ITaskService<>), typeof(TaskService<>));
             services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
