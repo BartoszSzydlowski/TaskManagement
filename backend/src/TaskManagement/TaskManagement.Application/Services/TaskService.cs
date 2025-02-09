@@ -1,6 +1,8 @@
-﻿namespace TaskManagement.Application.Services
+﻿using TaskManagement.Application.Interfaces;
+
+namespace TaskManagement.Application.Services
 {
-    public class TaskService
+    public class TaskService : ITaskService
     {
     }
 }
