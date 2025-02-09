@@ -5,6 +5,6 @@ namespace TaskManagement.Application.Interfaces
 {
     public interface ITaskService
     {
-        Task<ListResponse<TaskViewModel>> GetSortedByDifficultyDesc(int? userId);
+        Task<PagedResponse<TaskViewModel>> GetSortedByDifficultyDesc(int? userId, int pageNumber, int pageSize);
     }
 }

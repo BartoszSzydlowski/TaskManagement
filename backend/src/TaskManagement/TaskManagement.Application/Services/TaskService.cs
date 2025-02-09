@@ -11,13 +11,17 @@ namespace TaskManagement.Application.Services
         private readonly ITaskRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<ListResponse<TaskViewModel>> GetSortedByDifficultyDesc(int? userId)
+        public async Task<PagedResponse<TaskViewModel>> GetSortedByDifficultyDesc(int? userId, int pageNumber, int pageSize)
         {
-            var data = await _repository.GetSortedByDifficultyDesc(userId);
-            return new ListResponse<TaskViewModel>
+            var data = await _repository.GetSortedByDifficultyDesc(userId, pageNumber, pageSize);
+            var count = await _repository.GetTotalCount(userId);
+
+            return new PagedResponse<TaskViewModel>
             {
                 Data = _mapper.Map<List<TaskViewModel>>(data),
-                Total = data.Count
+                TotalCount = count,
+                PageNumber = pageNumber,
+                PageSize = pageSize
             };
         }
     }
