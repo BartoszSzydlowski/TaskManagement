@@ -12,7 +12,7 @@ namespace TaskManagement.API.Controllers
         private readonly ITaskService _service = service;
 
         [HttpGet]
-        public async Task<ListResponse<TaskViewModel>> GetSortedByDifficultyDesc([FromQuery] int? userId)
+        public async Task<ListResponse<TaskViewModel>> GetSortedByDifficultyDesc([FromQuery] int? userId = 0)
         {
             return await _service.GetSortedByDifficultyDesc(userId);
         }

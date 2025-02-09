@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TaskManagement.Application.Mapping;
 using TaskManagement.Application.ViewModels.User;
 using TaskManagement.Domain.Enums;
 using TaskManagement.Domain.Models;
@@ -7,7 +8,7 @@ using Entity = TaskManagement.Domain.Models;
 
 namespace TaskManagement.Application.ViewModels.TaskViewModel
 {
-    public class TaskViewModel
+    public class TaskViewModel : IMap
     {
         public int Id { get; set; }
 

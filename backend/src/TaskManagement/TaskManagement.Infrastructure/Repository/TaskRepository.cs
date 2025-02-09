@@ -9,7 +9,7 @@ namespace TaskManagement.Infrastructure.Repository
         public async Task<List<Domain.Models.Task>> GetSortedByDifficultyDesc(int? userId)
         {
             var result = _data.Tasks
-                .Where(x => userId != null ? x.User?.Id == userId : x.User == null)
+                .Where(x => userId == null ? x.User == null : x.User != null && x.User.Id == userId)
                 .OrderByDescending(x => x.Difficulty)
                 .ToList();
             return await Task.FromResult(result);
