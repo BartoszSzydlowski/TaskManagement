@@ -8,29 +8,9 @@ namespace TaskManagement.Infrastructure.Repository
     {
         private readonly MockedData _mockedData = mockedData;
 
-        public Task<List<User>> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Add(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
+            return await Task.FromResult(_mockedData.Users);
         }
     }
 }
