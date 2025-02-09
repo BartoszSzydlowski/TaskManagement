@@ -24,7 +24,10 @@ namespace TaskManagement.Application.ViewModels.TaskViewModel
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entity.Task, TaskViewModel>();
+            profile.CreateMap<Entity.Task, TaskViewModel>()
+                .Include<ImplementationTask, ImplementationTaskViewModel>()
+                .Include<MaintenanceTask, MaintenanceTaskViewModel>()
+                .Include<DeploymentTask, DeploymentTaskViewModel>();
         }
     }
 }
