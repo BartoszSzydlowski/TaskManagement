@@ -6,9 +6,12 @@ namespace TaskManagement.Infrastructure.Repository
     {
         private readonly MockedData _data = data;
 
-        public async Task<List<Domain.Models.Task>> GetSortedByDifficultyDesc(int? userId, bool assigned = false)
+        public async Task<List<Domain.Models.Task>> GetSortedByDifficultyDesc(int? userId)
         {
-            var result = _data.Tasks.Where(x => userId != null ? x.User?.Id == userId : x.User == null).ToList();
+            var result = _data.Tasks
+                .Where(x => userId != null ? x.User?.Id == userId : x.User == null)
+                .OrderByDescending(x => x.Difficulty)
+                .ToList();
             return await Task.FromResult(result);
         }
     }
