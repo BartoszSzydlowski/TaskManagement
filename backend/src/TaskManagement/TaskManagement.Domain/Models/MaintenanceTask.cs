@@ -1,6 +1,6 @@
 ﻿namespace TaskManagement.Domain.Models
 {
-    public class MaintenanceTask : BaseTask
+    public class MaintenanceTask : Task
     {
         public DateTime DueDate { get; set; }
 

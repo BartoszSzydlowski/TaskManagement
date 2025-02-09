@@ -6,29 +6,10 @@ namespace TaskManagement.Infrastructure.Repository
     {
         private readonly MockedData _data = data;
 
-        public Task<List<Domain.Models.Task>> GetAll()
+        public async Task<List<Domain.Models.Task>> GetSortedByDifficultyDesc(int? userId, bool assigned = false)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Domain.Models.Task> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Add(Domain.Models.Task task)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(Domain.Models.Task task)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
+            var result = _data.Tasks.Where(x => userId != null ? x.User?.Id == userId : x.User == null).ToList();
+            return await Task.FromResult(result);
         }
     }
 }
