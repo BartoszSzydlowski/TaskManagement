@@ -8,8 +8,8 @@ using TaskManagement.Domain.Interfaces;
 
 namespace TaskManagement.Application.Services
 {
-    public class TaskService<T>(ITaskRepository<Domain.Models.Task> repository, IMapper mapper, IValidationService validationService) 
-        : ITaskService<T> 
+    public class TaskService<T>(ITaskRepository<Domain.Models.Task> repository, IMapper mapper, IValidationService validationService)
+        : ITaskService<T>
         where T : TaskViewModel
     {
         private readonly ITaskRepository<Domain.Models.Task> _repository = repository;

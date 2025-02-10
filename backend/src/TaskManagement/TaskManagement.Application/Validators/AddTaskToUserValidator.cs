@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 using TaskManagement.Application.Requests;
-using TaskManagement.Application.Services;
 using TaskManagement.Domain.Interfaces;
 
 namespace TaskManagement.Application.Validators
 {
-    public class AddTaskToUserValidator(ITaskRepository<Domain.Models.Task> taskRepository, IUserRepository userRepository) 
+    public class AddTaskToUserValidator(ITaskRepository<Domain.Models.Task> taskRepository, IUserRepository userRepository)
         : AbstractValidator<AddTaskToUserRequest>
     {
         private readonly ITaskRepository<Domain.Models.Task> _taskRepository = taskRepository;
