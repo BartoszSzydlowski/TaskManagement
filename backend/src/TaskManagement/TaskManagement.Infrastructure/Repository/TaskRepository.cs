@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using TaskManagement.Domain.Interfaces;
-using TaskManagement.Domain.Models;
+﻿using TaskManagement.Domain.Interfaces;
 using Task = System.Threading.Tasks.Task;
 
 namespace TaskManagement.Infrastructure.Repository

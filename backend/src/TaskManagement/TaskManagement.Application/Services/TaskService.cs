@@ -4,7 +4,6 @@ using TaskManagement.Application.Interfaces;
 using TaskManagement.Application.Requests;
 using TaskManagement.Application.ViewModels.TaskViewModel;
 using TaskManagement.Domain.Interfaces;
-using TaskManagement.Domain.Models;
 
 namespace TaskManagement.Application.Services
 {

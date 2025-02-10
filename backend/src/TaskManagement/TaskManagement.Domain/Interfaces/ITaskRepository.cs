@@ -1,5 +1,4 @@
-﻿using TaskManagement.Domain.Models;
-using Task = System.Threading.Tasks.Task;
+﻿using Task = System.Threading.Tasks.Task;
 
 namespace TaskManagement.Domain.Interfaces
 {

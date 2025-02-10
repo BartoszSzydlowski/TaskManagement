@@ -1,6 +1,4 @@
-﻿using TaskManagement.Domain.Models;
-
-namespace TaskManagement.Application.Requests
+﻿namespace TaskManagement.Application.Requests
 {
     public class AddTaskToUserRequest
     {
