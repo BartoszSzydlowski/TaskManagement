@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using TaskManagement.Application.Common.Responses;
 using TaskManagement.Application.Interfaces;
+using TaskManagement.Application.Requests;
 using TaskManagement.Application.ViewModels.TaskViewModel;
 using TaskManagement.Domain.Interfaces;
+using TaskManagement.Domain.Models;
 
 namespace TaskManagement.Application.Services
 {
@@ -23,6 +25,17 @@ namespace TaskManagement.Application.Services
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };
+        }
+
+        public async Task<BaseResponse> AddTaskToUser(AddTaskToUserRequest request)
+        {
+            await _repository.AddTaskToUser(request.TasksIds, request.UserId);
+            return new BaseResponse();
+        }
+
+        public async Task<Domain.Models.Task> Get(int id)
+        {
+            return await _repository.Get(id);
         }
     }
 }
