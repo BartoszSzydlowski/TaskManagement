@@ -5,7 +5,8 @@ using TaskManagement.Domain.Enums;
 
 namespace TaskManagement.Application.Interfaces
 {
-    public interface ITaskService<T> where T : TaskViewModel
+    public interface ITaskService<T>
+        where T : TaskViewModel
     {
         Task<PagedResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, Status status, int taskTypeId, int? userId);
 

@@ -4,7 +4,8 @@ using Task = System.Threading.Tasks.Task;
 
 namespace TaskManagement.Infrastructure.Repository
 {
-    public class TaskRepository<T>(MockedData data) : ITaskRepository<T> where T : Domain.Models.Task
+    public class TaskRepository<T>(MockedData data) : ITaskRepository<T>
+        where T : Domain.Models.Task
     {
         private readonly MockedData _data = data;
 

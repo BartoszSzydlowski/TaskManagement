@@ -26,7 +26,7 @@ namespace TaskManagement.Application.Validators
                 .WithMessage("Programmer can't be assigned maintenance and deployment tasks");
 
             RuleFor(x => x)
-                .MustAsync(CheckDifficultyDistribution)
+                .MustAsync(HaveValidDifficultyDistribution)
                 .WithMessage("User assigned has tasks properly distributed around their difficulty");
 
             return base.ValidateAsync(context, cancellation);
@@ -60,33 +60,27 @@ namespace TaskManagement.Application.Validators
             return tasksCount <= 10;
         }
 
-        private async Task<bool> CheckDifficultyDistribution(AddTaskToUserRequest request, CancellationToken cancellation = default)
+        private async Task<bool> HaveValidDifficultyDistribution(AddTaskToUserRequest request, CancellationToken cancellation = default)
         {
-            var userTasks = await _taskRepository.GetUserTasks(request.UserId);
-            var totalTasks = userTasks.Count + request.TasksIds.Length;
+            var existingTasks = await _taskRepository.GetUserTasks(request.UserId);
 
+            var totalTasks = existingTasks.Count + request.TasksIds.Length;
             if (totalTasks == 0) return true;
 
-            var highDifficultyCount = userTasks.Count(t => t.Difficulty is 4 or 5);
-            var lowDifficultyCount = userTasks.Count(t => t.Difficulty is 1 or 2);
+            var highDifficultyCount = existingTasks.Count(t => t.Difficulty is 4 or 5);
+            var lowDifficultyCount = existingTasks.Count(t => t.Difficulty is 1 or 2);
 
             foreach (var taskId in request.TasksIds)
             {
                 var task = await _taskRepository.Get(taskId);
-                if (task.Difficulty is 4 or 5)
-                {
-                    highDifficultyCount++;
-                }
-                else if (task.Difficulty is 1 or 2)
-                {
-                    lowDifficultyCount++;
-                }
+                if (task.Difficulty is 4 or 5) highDifficultyCount++;
+                if (task.Difficulty is 1 or 2) lowDifficultyCount++;
             }
 
-            double highDifficultyPercentage = (double)highDifficultyCount / totalTasks;
-            double lowDifficultyPercentage = (double)lowDifficultyCount / totalTasks;
+            var highDifficultyPercentage = (double)highDifficultyCount / totalTasks * 100;
+            var lowDifficultyPercentage = (double)lowDifficultyCount / totalTasks * 100;
 
-            return highDifficultyPercentage <= 0.5 && lowDifficultyPercentage is >= 0.1 and <= 0.3;
+            return highDifficultyPercentage is >= 10 and <= 30 && lowDifficultyPercentage <= 50;
         }
     }
 }
