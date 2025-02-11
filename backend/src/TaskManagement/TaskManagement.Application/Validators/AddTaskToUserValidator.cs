@@ -16,13 +16,77 @@ namespace TaskManagement.Application.Validators
             RuleFor(x => x)
                 .Must(MaxTenTasksPerRequest)
                 .WithMessage("Only ten tasks at once can be assigned");
+
+            RuleFor(x => x)
+                .MustAsync(HaveBetweenFiveAndElevenTasks)
+                .WithMessage("User must have at least 5 or max 11 tasks assigned");
+
+            RuleFor(x => x)
+                .MustAsync(CheckUserType)
+                .WithMessage("Programmer can't be assigned maintenance and deployment tasks");
+
+            RuleFor(x => x)
+                .MustAsync(CheckDifficultyDistribution)
+                .WithMessage("User assigned has tasks properly distributed around their difficulty");
+
             return base.ValidateAsync(context, cancellation);
+        }
+
+        private async Task<bool> CheckUserType(AddTaskToUserRequest request, CancellationToken cancellation = default)
+        {
+            var user = await _userRepository.Get(request.UserId);
+            var userType = user.UserType.Id;
+            foreach (var id in request.TasksIds)
+            {
+                var task = await _taskRepository.Get(id);
+                if((task.TaskType.Id is 1 or 2) && userType is 1)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private async Task<bool> HaveBetweenFiveAndElevenTasks(AddTaskToUserRequest request, CancellationToken cancellation = default)
+        {
+            var tasks = await _taskRepository.GetUserTasks(request.UserId);
+            return tasks.Count is >= 5 and <= 11;
         }
 
         private bool MaxTenTasksPerRequest(AddTaskToUserRequest request)
         {
             var tasksCount = request.TasksIds.Length;
             return tasksCount <= 10;
+        }
+
+        private async Task<bool> CheckDifficultyDistribution(AddTaskToUserRequest request, CancellationToken cancellation = default)
+        {
+            var userTasks = await _taskRepository.GetUserTasks(request.UserId);
+            var totalTasks = userTasks.Count + request.TasksIds.Length;
+
+            if (totalTasks == 0) return true;
+
+            var highDifficultyCount = userTasks.Count(t => t.Difficulty is 4 or 5);
+            var lowDifficultyCount = userTasks.Count(t => t.Difficulty is 1 or 2);
+
+            foreach (var taskId in request.TasksIds)
+            {
+                var task = await _taskRepository.Get(taskId);
+                if (task.Difficulty is 4 or 5)
+                {
+                    highDifficultyCount++;
+                }
+                else if (task.Difficulty is 1 or 2)
+                {
+                    lowDifficultyCount++;
+                }
+            }
+
+            double highDifficultyPercentage = (double)highDifficultyCount / totalTasks;
+            double lowDifficultyPercentage = (double)lowDifficultyCount / totalTasks;
+
+            return highDifficultyPercentage <= 0.5 && lowDifficultyPercentage is >= 0.1 and <= 0.3;
         }
     }
 }

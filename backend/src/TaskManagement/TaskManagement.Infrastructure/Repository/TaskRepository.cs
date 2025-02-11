@@ -48,13 +48,17 @@ namespace TaskManagement.Infrastructure.Repository
                     task.User = user;
                 }
             });
-
-            var newTasks = _data.Tasks;
         }
 
         public async Task<T> Get(int id)
         {
             var result = await Task.FromResult(_data.Tasks.FirstOrDefault(x => x.Id == id) as T);
+            return await Task.FromResult(result!);
+        }
+
+        public async Task<List<T>> GetUserTasks(int userId)
+        {
+            var result = _data.Tasks.Where(x => x.User?.Id == userId).Cast<T>().ToList();
             return await Task.FromResult(result!);
         }
     }

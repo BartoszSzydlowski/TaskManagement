@@ -12,5 +12,7 @@ namespace TaskManagement.Domain.Interfaces
         Task AddTaskToUser(int[] tasksIds, int userId);
 
         Task<T> Get(int id);
+
+        Task<List<T>> GetUserTasks(int userId);
     }
 }

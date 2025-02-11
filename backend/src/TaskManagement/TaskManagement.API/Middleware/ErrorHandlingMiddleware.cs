@@ -10,6 +10,11 @@ namespace TaskManagement.API.Middleware
     {
         private readonly RequestDelegate _next = next;
 
+        private static readonly JsonSerializerOptions _jsonSerializerOptions = new()
+        {
+            WriteIndented = true
+        };
+
         public async Task Invoke(HttpContext context)
         {
             try
@@ -48,11 +53,7 @@ namespace TaskManagement.API.Middleware
             var errorViewModel = new BaseResponse() { Errors = errors };
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
-            var jsonSerializerOptions = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-            var result = JsonSerializer.Serialize(errorViewModel, jsonSerializerOptions);
+            var result = JsonSerializer.Serialize(errorViewModel, _jsonSerializerOptions);
             await context.Response.WriteAsync(result);
         }
     }

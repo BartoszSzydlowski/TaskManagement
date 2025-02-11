@@ -12,5 +12,10 @@ namespace TaskManagement.Infrastructure.Repository
         {
             return await Task.FromResult(_mockedData.Users);
         }
+
+        public async Task<User> Get(int id)
+        {
+            return await Task.FromResult(_mockedData.Users.FirstOrDefault(x => x.Id == id)!);
+        }
     }
 }
