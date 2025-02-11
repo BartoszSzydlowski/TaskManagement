@@ -1,4 +1,5 @@
-﻿using TaskManagement.Domain.Interfaces;
+﻿using TaskManagement.Domain.Enums;
+using TaskManagement.Domain.Interfaces;
 using Task = System.Threading.Tasks.Task;
 
 namespace TaskManagement.Infrastructure.Repository
@@ -7,20 +8,24 @@ namespace TaskManagement.Infrastructure.Repository
     {
         private readonly MockedData _data = data;
 
-        public async Task<int> GetTotalCount(int taskTypeId, int? userId)
+        public async Task<int> GetTotalCount(int taskTypeId, int? userId, Status status)
         {
             return await Task.FromResult(
                 _data.Tasks
-                    .Where(x => (userId == null ? x.User == null : x.User != null && x.User.Id == userId) && taskTypeId == x.TaskType.Id)
+                    .Where(x => (userId == null ? x.User == null : x.User != null && x.User.Id == userId) 
+                        && taskTypeId == x.TaskType.Id
+                        && status == x.Status)
                     .OrderByDescending(x => x.Difficulty)
                     .Count()
                 );
         }
 
-        public async Task<List<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, int taskTypeId, int? userId)
+        public async Task<List<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, Status status, int taskTypeId, int? userId)
         {
             var result = _data.Tasks
-                .Where(x => (userId == null ? x.User == null : x.User != null && x.User.Id == userId) && taskTypeId == x.TaskType.Id)
+                .Where(x => (userId == null ? x.User == null : x.User != null && x.User.Id == userId) 
+                    && taskTypeId == x.TaskType.Id
+                    && status == x.Status)
                 .OrderByDescending(x => x.Difficulty);
 
             var pagedResult = result
