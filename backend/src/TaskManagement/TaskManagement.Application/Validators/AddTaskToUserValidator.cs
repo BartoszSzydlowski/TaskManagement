@@ -39,7 +39,7 @@ namespace TaskManagement.Application.Validators
             foreach (var id in request.TasksIds)
             {
                 var task = await _taskRepository.Get(id);
-                if((task.TaskType.Id is 1 or 2) && userType is 1)
+                if ((task.TaskType.Id is 1 or 2) && userType is 1)
                 {
                     return false;
                 }
