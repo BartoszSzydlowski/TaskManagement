@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { TaskTypeService } from '../../services/task-type.service';
 import { TaskType } from '../../models/task-type.model';
 import {NgForOf} from '@angular/common';
+import {TaskTypes} from '../../app.component';
 
 @Component({
   selector: 'app-task-type-dropdown',
@@ -13,7 +14,7 @@ import {NgForOf} from '@angular/common';
 })
 export class TaskTypeDropdownComponent implements OnInit {
   taskTypes: TaskType[] = [];
-  @Output() taskTypeSelected = new EventEmitter<string>();
+  @Output() taskTypeSelected = new EventEmitter<TaskTypes>();
 
   constructor(private taskTypeService: TaskTypeService) {}
 
@@ -24,7 +25,8 @@ export class TaskTypeDropdownComponent implements OnInit {
   }
 
   onSelect(event: Event): void {
-    const selectedType = (event.target as HTMLSelectElement).value;
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const selectedType = (TaskTypes as any)[selectedValue];
     this.taskTypeSelected.emit(selectedType);
   }
 }
