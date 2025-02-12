@@ -1,0 +1,24 @@
+.task-container {
+  .card {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .list-group-item {
+    display: flex;
+    align-items: center;
+
+    input[type='checkbox'] {
+      margin-right: 10px;
+    }
+
+    .badge {
+      margin-left: auto;
+    }
+  }
+
+  button {
+    border-radius: 0.5rem;
+    font-weight: bold;
+  }
+}

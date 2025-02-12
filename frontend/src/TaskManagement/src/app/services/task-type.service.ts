@@ -5,7 +5,7 @@ import { TaskType } from '../models/task-type.model';
 
 @Injectable({ providedIn: 'root' })
 export class TaskTypeService {
-  private apiUrl = '/api/TasksTypes/GetAll';
+  private apiUrl = 'https://localhost:44383/api/TasksTypes/GetAll';
 
   constructor(private http: HttpClient) {}
 

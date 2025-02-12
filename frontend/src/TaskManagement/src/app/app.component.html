@@ -1,1 +1,19 @@
-<router-outlet />
+<div class="container mt-4">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <!-- task-type-dropdown.component.html -->
+      <app-task-type-dropdown (taskTypeSelected)="onTaskTypeSelected($event)"></app-task-type-dropdown>
+    </div>
+    <div class="col-md-6">
+      <!-- user-dropdown.component.html -->
+      <app-user-dropdown (userSelected)="onUserSelected($event)"></app-user-dropdown>
+    </div>
+  </div>
+
+  <!-- task-list.component.html -->
+  <app-task-list [tasks]="tasks" [unassignedTasks]="unassignedTasks" (assignTasks)="assignTasksToUser($event)"></app-task-list>
+
+  <div *ngIf="error" class="alert alert-danger mt-3">
+    {{ error }}
+  </div>
+</div>

@@ -1,1 +1,6 @@
-<p>user-dropdown works!</p>
+<div class="dropdown-container">
+  <label for="userSelect" class="form-label">Select User</label>
+  <select id="userSelect" class="form-select" (change)="onSelect($event)">
+    <option *ngFor="let user of users" [value]="user.id">{{ user.name  }} {{ user.surname }}</option>
+  </select>
+</div>
