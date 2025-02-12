@@ -1,7 +1,11 @@
 ﻿using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using TaskManagement.Application.Common.Validatiors;
 using TaskManagement.Application.Interfaces;
+using TaskManagement.Application.Requests;
 using TaskManagement.Application.Services;
+using TaskManagement.Application.Validators;
 
 namespace TaskManagement.Application
 {
@@ -11,7 +15,13 @@ namespace TaskManagement.Application
         {
             services.AddScoped(typeof(ITaskService<>), typeof(TaskService<>));
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IValidationService, ValidationService>();
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddScoped<IValidator<AddTaskToUserRequest>, AddTaskToUserValidator>();
+
             return services;
         }
     }
