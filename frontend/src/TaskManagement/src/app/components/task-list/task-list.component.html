@@ -3,7 +3,6 @@
     <div class="card-header bg-primary text-white">Assigned Tasks</div>
     <ul class="list-group list-group-flush">
       <li *ngFor="let task of tasks" class="list-group-item">
-        <input type="checkbox" [value]="task.id" (change)="onTaskChecked(task.id, $event)">
         <span>{{ task.name }} - <strong>{{ task.status }}</strong></span>
         <span class="badge bg-secondary ms-auto">Difficulty: {{ task.difficulty }}</span>
       </li>

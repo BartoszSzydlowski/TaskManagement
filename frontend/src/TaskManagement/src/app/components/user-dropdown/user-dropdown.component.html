@@ -2,6 +2,6 @@
   <label for="userSelect" class="form-label">Select User</label>
   <select id="userSelect" class="form-select" (change)="onSelect($event)">
     <option disabled selected hidden>Wybierz z listy</option>
-    <option *ngFor="let user of users" [value]="user.id">{{ user.name  }} {{ user.surname }}</option>
+    <option *ngFor="let user of users" [value]="user.id">{{ user.name }} {{ user.surname }}</option>
   </select>
 </div>

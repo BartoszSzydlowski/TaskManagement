@@ -8,7 +8,7 @@ namespace TaskManagement.Application.Interfaces
     public interface ITaskService<T>
         where T : TaskViewModel
     {
-        Task<PagedResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, Status status, int taskTypeId, int? userId);
+        Task<PagedResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, Status? status, int taskTypeId, int? userId);
 
         Task<BaseResponse> AddTaskToUser(AddTaskToUserRequest request);
 

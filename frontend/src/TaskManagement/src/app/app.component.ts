@@ -26,56 +26,36 @@ export class AppComponent {
 
   constructor(private taskService: TaskService) {}
 
-  getTasks(pageNumber: number, status: TaskStatus, pageSize: number){
-    if (this.taskType != null && this.selectedUserId != 0) {
-      const params = { pageNumber: 1, status: status, pageSize: 10, userId: this.selectedUserId };
-      if (this.taskType === 'Deployment') {
-        this.taskService.getDeploymentTasks(params).subscribe(tasks => {
-          if (status === TaskStatus.DONE) {
-            this.tasks = tasks.data
-          }
-          else if (status === TaskStatus.TODO) {
-            this.unassignedTasks = tasks.data;
-          }
-        });
-      } else if (this.taskType === 'Implementation') {
-        this.taskService.getImplementationTasks(params).subscribe(tasks => {
-          if (status === TaskStatus.DONE) {
-            this.tasks = tasks.data
-          }
-          else if (status === TaskStatus.TODO) {
-            this.unassignedTasks = tasks.data;
-          }
-        });
-      } else if (this.taskType === 'Maintenance') {
-        this.taskService.getMaintenanceTasks(params).subscribe(tasks => {
-          if (status === TaskStatus.DONE) {
-            this.tasks = tasks.data
-          }
-          else if (status === TaskStatus.TODO) {
-            this.unassignedTasks = tasks.data;
-          }
-        });
-      }
+  getTasks(taskType: string, userId: number){
+    this.errors = [];
+    this.selectedUserId = userId;
+    this.taskType = taskType;
+    const paramsAssigned = { pageNumber: 1, pageSize: 10, userId: userId };
+    const paramsUnassigned = { pageNumber: 1, status: TaskStatus.TODO, pageSize: 10, userId: 0 };
+    if (taskType === 'Deployment') {
+      this.taskService.getDeploymentTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      this.taskService.getDeploymentTasks(paramsUnassigned).subscribe(tasks => this.unassignedTasks = tasks.data);
+    } else if (taskType === 'Implementation') {
+      this.taskService.getImplementationTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      this.taskService.getImplementationTasks(paramsUnassigned).subscribe(tasks => this.unassignedTasks = tasks.data);
+    } else if (taskType === 'Maintenance') {
+      this.taskService.getMaintenanceTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      this.taskService.getMaintenanceTasks(paramsUnassigned).subscribe(tasks => this.unassignedTasks = tasks.data);
     }
-    //return { pageNumber: pageNumber, status, pageSize: 10 };
   }
 
   onTaskTypeSelected(taskType: string) {
+    this.errors = [];
     this.taskType = taskType;
-    this.getTasks(1, TaskStatus.DONE, 10);
-    this.getTasks(1, TaskStatus.TODO, 10);
+    this.getTasks(taskType, this.selectedUserId);
   }
 
   onUserSelected(userId: number) {
     this.errors = [];
     this.selectedUserId = userId;
-/*    const paramsToDo = { pageNumber: 1, status: 'ToDo', pageSize: 10, userId };
-    const paramsDone = { pageNumber: 1, status: 'Done', pageSize: 10, userId };
-    this.taskService.getDeploymentTasks(paramsToDo).subscribe(tasks => this.unassignedTasks = tasks.data);
-    this.taskService.getDeploymentTasks(paramsDone).subscribe(tasks => this.tasks = tasks.data);*/
-    this.getTasks(1, TaskStatus.DONE, 10);
-    this.getTasks(1, TaskStatus.TODO, 10);
+    if (this.taskType != null) {
+      this.getTasks(this.taskType, userId);
+    }
   }
 
   assignTasksToUser({ taskIds, userId }: { taskIds: number[], userId: number }) {

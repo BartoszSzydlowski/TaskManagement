@@ -1,6 +1,7 @@
 <div class="dropdown-container">
   <label for="taskTypeSelect" class="form-label">Select Task Type</label>
   <select id="taskTypeSelect" class="form-select" (change)="onSelect($event)">
+    <option disabled selected hidden>Wybierz z listy</option>
     <option *ngFor="let type of taskTypes" [value]="type.name">{{ type.name }}</option>
   </select>
 </div>
