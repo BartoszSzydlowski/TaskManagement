@@ -1,5 +1,6 @@
-export interface ApiResponse<T> {
+import { BaseResponse } from './base-response.model';
+
+export interface ApiResponse<T> extends BaseResponse {
   data: T[];
-  errors: string[];
   total: number;
 }

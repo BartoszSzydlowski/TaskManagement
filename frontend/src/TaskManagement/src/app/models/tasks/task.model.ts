@@ -1,9 +1,9 @@
-import { UserType } from '../user-type.model';
+import { User } from '../user.model';
 
 export interface Task {
   id: number;
-  title: string;
-  status: 'Done' | 'ToDo';
+  content: string;
   difficulty: number;
-  userType: UserType
+  status: 'Done' | 'ToDo';
+  user: User
 }
