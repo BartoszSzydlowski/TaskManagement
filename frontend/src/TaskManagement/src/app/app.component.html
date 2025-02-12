@@ -11,9 +11,9 @@
   </div>
 
   <!-- task-list.component.html -->
-  <app-task-list [tasks]="tasks" [unassignedTasks]="unassignedTasks" (assignTasks)="assignTasksToUser($event)"></app-task-list>
+  <app-task-list [tasks]="tasks" [unassignedTasks]="unassignedTasks" (assignTasks)="assignTasksToUser($event)" [selectedUserId]="this.selectedUserId"></app-task-list>
 
-  <div *ngIf="error" class="alert alert-danger mt-3">
+  <div *ngFor="let error of errors" class="alert alert-danger mt-3">
     {{ error }}
   </div>
 </div>

@@ -24,7 +24,9 @@ export class UserDropdownComponent implements OnInit {
   }
 
   onSelect(event: Event): void {
-    const selectedUserId = +(event.target as HTMLSelectElement).value;
+    console.log(event);
+    const selectedUserId =+ (event.target as HTMLSelectElement).value;
+    console.log(selectedUserId);
     this.userSelected.emit(selectedUserId);
   }
 }

@@ -2,8 +2,12 @@ import { User } from '../user.model';
 
 export interface Task {
   id: number;
-  content: string;
+  name: string;
   difficulty: number;
-  status: 'Done' | 'ToDo';
+  status: TaskStatus;
   user: User
+}
+
+export enum TaskStatus {
+  DONE = 1, TODO = 2
 }

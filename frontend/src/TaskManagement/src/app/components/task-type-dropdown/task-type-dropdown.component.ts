@@ -19,7 +19,7 @@ export class TaskTypeDropdownComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskTypeService.getAllTaskTypes().subscribe((types) => {
-      this.taskTypes = types;
+      this.taskTypes = types.data;
     });
   }
 

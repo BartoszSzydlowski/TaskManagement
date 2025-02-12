@@ -11,7 +11,7 @@ namespace TaskManagement.Application.ViewModels.Task
     {
         public int Id { get; set; }
 
-        public string Content { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         public int Difficulty { get; set; }
 

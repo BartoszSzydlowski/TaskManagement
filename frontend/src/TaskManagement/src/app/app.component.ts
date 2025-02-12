@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { TaskService } from './services/task.service';
-import { Task } from './models/tasks/task.model';
+import {Component} from '@angular/core';
+import {TaskService} from './services/task.service';
+import {Task, TaskStatus} from './models/tasks/task.model';
 import {UserDropdownComponent} from './components/user-dropdown/user-dropdown.component';
-import {NgIf} from '@angular/common';
+import {NgForOf} from '@angular/common';
 import {TaskTypeDropdownComponent} from './components/task-type-dropdown/task-type-dropdown.component';
 import {TaskListComponent} from './components/task-list/task-list.component';
 
@@ -10,41 +10,80 @@ import {TaskListComponent} from './components/task-list/task-list.component';
   selector: 'app-root',
   imports: [
     UserDropdownComponent,
-    NgIf,
     TaskTypeDropdownComponent,
-    TaskListComponent
+    TaskListComponent,
+    NgForOf
   ],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
   tasks: Task[] = [];
   unassignedTasks: Task[] = [];
-  error: string | null = null;
+  errors: string[] = [];
+  selectedUserId: number = 0;
+  title: string = "TaskManagement";
+  taskType: string | null = null;
 
   constructor(private taskService: TaskService) {}
 
-  onTaskTypeSelected(taskType: string) {
-    const params = { pageNumber: 1, status: 'Done', pageSize: 10, userId: 1 };
-    if (taskType === 'Deployment') {
-      this.taskService.getDeploymentTasks(params).subscribe(tasks => this.tasks = tasks);
-    } else if (taskType === 'Implementation') {
-      this.taskService.getImplementationTasks(params).subscribe(tasks => this.tasks = tasks);
-    } else if (taskType === 'Maintenance') {
-      this.taskService.getMaintenanceTasks(params).subscribe(tasks => this.tasks = tasks);
+  getTasks(pageNumber: number, status: TaskStatus, pageSize: number){
+    if (this.taskType != null && this.selectedUserId != 0) {
+      const params = { pageNumber: 1, status: status, pageSize: 10, userId: this.selectedUserId };
+      if (this.taskType === 'Deployment') {
+        this.taskService.getDeploymentTasks(params).subscribe(tasks => {
+          if (status === TaskStatus.DONE) {
+            this.tasks = tasks.data
+          }
+          else if (status === TaskStatus.TODO) {
+            this.unassignedTasks = tasks.data;
+          }
+        });
+      } else if (this.taskType === 'Implementation') {
+        this.taskService.getImplementationTasks(params).subscribe(tasks => {
+          if (status === TaskStatus.DONE) {
+            this.tasks = tasks.data
+          }
+          else if (status === TaskStatus.TODO) {
+            this.unassignedTasks = tasks.data;
+          }
+        });
+      } else if (this.taskType === 'Maintenance') {
+        this.taskService.getMaintenanceTasks(params).subscribe(tasks => {
+          if (status === TaskStatus.DONE) {
+            this.tasks = tasks.data
+          }
+          else if (status === TaskStatus.TODO) {
+            this.unassignedTasks = tasks.data;
+          }
+        });
+      }
     }
+    //return { pageNumber: pageNumber, status, pageSize: 10 };
+  }
+
+  onTaskTypeSelected(taskType: string) {
+    this.taskType = taskType;
+    this.getTasks(1, TaskStatus.DONE, 10);
+    this.getTasks(1, TaskStatus.TODO, 10);
   }
 
   onUserSelected(userId: number) {
-    const paramsToDo = { pageNumber: 1, status: 'ToDo', pageSize: 10, userId };
+    this.errors = [];
+    this.selectedUserId = userId;
+/*    const paramsToDo = { pageNumber: 1, status: 'ToDo', pageSize: 10, userId };
     const paramsDone = { pageNumber: 1, status: 'Done', pageSize: 10, userId };
-    this.taskService.getDeploymentTasks(paramsToDo).subscribe(tasks => this.unassignedTasks = tasks);
-    this.taskService.getDeploymentTasks(paramsDone).subscribe(tasks => this.tasks = tasks);
+    this.taskService.getDeploymentTasks(paramsToDo).subscribe(tasks => this.unassignedTasks = tasks.data);
+    this.taskService.getDeploymentTasks(paramsDone).subscribe(tasks => this.tasks = tasks.data);*/
+    this.getTasks(1, TaskStatus.DONE, 10);
+    this.getTasks(1, TaskStatus.TODO, 10);
   }
 
   assignTasksToUser({ taskIds, userId }: { taskIds: number[], userId: number }) {
     this.taskService.addTaskToUser(taskIds, userId).subscribe({
-      next: () => this.error = null,
-      error: err => this.error = err.error.errors
+      next: () => this.errors = [],
+      error: err => {
+        this.errors = err.error.Errors;
+      }
     });
   }
 }
