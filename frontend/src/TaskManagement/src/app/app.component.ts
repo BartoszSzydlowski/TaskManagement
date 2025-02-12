@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {TaskService} from './services/task.service';
 import {Task, TaskStatus} from './models/tasks/task.model';
 import {UserDropdownComponent} from './components/user-dropdown/user-dropdown.component';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {TaskTypeDropdownComponent} from './components/task-type-dropdown/task-type-dropdown.component';
 import {TaskListComponent} from './components/task-list/task-list.component';
 
@@ -12,7 +12,8 @@ import {TaskListComponent} from './components/task-list/task-list.component';
     UserDropdownComponent,
     TaskTypeDropdownComponent,
     TaskListComponent,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './app.component.html'
 })
@@ -23,11 +24,13 @@ export class AppComponent {
   selectedUserId: number = 0;
   title: string = "TaskManagement";
   taskType: TaskTypes | null = null;
+  successMessage: string | null = null;
 
   constructor(private taskService: TaskService) {}
 
   getTasks(taskType: TaskTypes, userId: number){
     this.errors = [];
+    this.successMessage = null;
     this.selectedUserId = userId;
     this.taskType = taskType;
     const paramsAssigned = { pageNumber: 1, pageSize: 10, userId: userId };
@@ -45,13 +48,11 @@ export class AppComponent {
   }
 
   onTaskTypeSelected(taskType: TaskTypes) {
-    this.errors = [];
     this.taskType = taskType;
     this.getTasks(taskType, this.selectedUserId);
   }
 
   onUserSelected(userId: number) {
-    this.errors = [];
     this.selectedUserId = userId;
     if (this.taskType != null) {
       this.getTasks(this.taskType, userId);
@@ -60,8 +61,15 @@ export class AppComponent {
 
   assignTasksToUser({ taskIds, userId }: { taskIds: number[], userId: number }) {
     this.taskService.addTaskToUser(taskIds, userId).subscribe({
-      next: () => this.errors = [],
+      next: () => {
+        this.errors = [];
+        if (this.taskType) {
+          this.getTasks(this.taskType, this.selectedUserId);
+        }
+        this.successMessage = "Tasks assigned successfully";
+      },
       error: err => {
+        this.successMessage = null;
         this.errors = err.error.Errors;
       }
     });

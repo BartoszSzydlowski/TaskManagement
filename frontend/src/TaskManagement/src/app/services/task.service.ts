@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import { Task } from '../models/tasks/task.model';
 import {ApiResponse} from '../models/response/api-response.model';
 import {DeploymentTask} from '../models/tasks/deployment-task.model';
