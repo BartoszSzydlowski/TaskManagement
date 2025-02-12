@@ -3,10 +3,9 @@ using TaskManagement.Application.Mapping;
 using TaskManagement.Application.ViewModels.User;
 using TaskManagement.Domain.Enums;
 using TaskManagement.Domain.Models;
-
 using Entity = TaskManagement.Domain.Models;
 
-namespace TaskManagement.Application.ViewModels.TaskViewModel
+namespace TaskManagement.Application.ViewModels.Task
 {
     public class TaskViewModel : IMap
     {

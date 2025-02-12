@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Common.Responses;
 using TaskManagement.Application.Interfaces;
-using TaskManagement.Application.ViewModels.TaskViewModel;
+using TaskManagement.Application.ViewModels.Task;
 using TaskManagement.Domain.Enums;
 
 namespace TaskManagement.API.Controllers

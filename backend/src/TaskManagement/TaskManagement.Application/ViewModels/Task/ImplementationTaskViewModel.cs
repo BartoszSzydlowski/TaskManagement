@@ -2,7 +2,7 @@
 using TaskManagement.Application.Mapping;
 using Entity = TaskManagement.Domain.Models;
 
-namespace TaskManagement.Application.ViewModels.TaskViewModel
+namespace TaskManagement.Application.ViewModels.Task
 {
     public class ImplementationTaskViewModel : TaskViewModel, IMap
     {

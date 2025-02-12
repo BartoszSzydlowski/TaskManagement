@@ -10,7 +10,10 @@ namespace TaskManagement.Infrastructure
         {
             services.AddScoped(typeof(ITaskRepository<>), typeof(TaskRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITaskTypeRepository, TaskTypeRepository>();
+
             services.AddSingleton<MockedData>();
+
             return services;
         }
     }

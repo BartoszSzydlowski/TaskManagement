@@ -3,7 +3,7 @@ using TaskManagement.Application.Common.Responses;
 using TaskManagement.Application.Common.Validatiors;
 using TaskManagement.Application.Interfaces;
 using TaskManagement.Application.Requests;
-using TaskManagement.Application.ViewModels.TaskViewModel;
+using TaskManagement.Application.ViewModels.Task;
 using TaskManagement.Domain.Enums;
 using TaskManagement.Domain.Interfaces;
 

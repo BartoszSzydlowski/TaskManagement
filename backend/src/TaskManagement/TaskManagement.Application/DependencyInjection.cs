@@ -15,7 +15,7 @@ namespace TaskManagement.Application
         {
             services.AddScoped(typeof(ITaskService<>), typeof(TaskService<>));
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<ITaskTypeService, TaskTypeService>();
             services.AddScoped<IValidationService, ValidationService>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
