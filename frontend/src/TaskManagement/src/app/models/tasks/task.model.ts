@@ -9,5 +9,5 @@ export interface Task {
 }
 
 export enum TaskStatus {
-  DONE = 1, TODO = 2
+  TODO = 2
 }
