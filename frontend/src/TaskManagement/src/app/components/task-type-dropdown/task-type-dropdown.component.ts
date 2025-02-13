@@ -1,8 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { TaskTypeService } from '../../services/task-type.service';
-import { TaskType } from '../../models/task-type.model';
+import {TaskType, TaskTypes} from '../../models/task-type.model';
 import {NgForOf} from '@angular/common';
-import {TaskTypes} from '../../app.component';
 
 @Component({
   selector: 'app-task-type-dropdown',

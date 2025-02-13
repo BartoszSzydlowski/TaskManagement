@@ -5,6 +5,7 @@ import {UserDropdownComponent} from './components/user-dropdown/user-dropdown.co
 import {NgForOf, NgIf} from '@angular/common';
 import {TaskTypeDropdownComponent} from './components/task-type-dropdown/task-type-dropdown.component';
 import {TaskListComponent} from './components/task-list/task-list.component';
+import {TaskTypes} from './models/task-type.model';
 
 @Component({
   selector: 'app-root',
@@ -36,13 +37,19 @@ export class AppComponent {
     const paramsAssigned = { pageNumber: 1, pageSize: 10, userId: userId };
     const paramsUnassigned = { pageNumber: 1, status: TaskStatus.TODO, pageSize: 10, userId: 0 };
     if (taskType === TaskTypes.Deployment) {
-      this.taskService.getDeploymentTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      if(this.selectedUserId != 0) {
+        this.taskService.getDeploymentTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      }
       this.taskService.getDeploymentTasks(paramsUnassigned).subscribe(tasks => this.unassignedTasks = tasks.data);
     } else if (taskType === TaskTypes.Implementation) {
-      this.taskService.getImplementationTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      if (this.selectedUserId != 0) {
+        this.taskService.getImplementationTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      }
       this.taskService.getImplementationTasks(paramsUnassigned).subscribe(tasks => this.unassignedTasks = tasks.data);
     } else if (taskType === TaskTypes.Maintenance) {
-      this.taskService.getMaintenanceTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      if (this.selectedUserId != 0) {
+        this.taskService.getMaintenanceTasks(paramsAssigned).subscribe(tasks => this.tasks = tasks.data);
+      }
       this.taskService.getMaintenanceTasks(paramsUnassigned).subscribe(tasks => this.unassignedTasks = tasks.data);
     }
   }
@@ -76,10 +83,4 @@ export class AppComponent {
       }
     });
   }
-}
-
-export enum TaskTypes {
-  Deployment = 1,
-  Maintenance = 2,
-  Implementation = 3
 }

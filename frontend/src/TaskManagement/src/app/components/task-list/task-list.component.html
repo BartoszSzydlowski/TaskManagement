@@ -2,6 +2,8 @@
   <div class="card mt-3">
     <div class="card-header bg-primary text-white">Assigned Tasks</div>
     <ul class="list-group list-group-flush">
+      <div *ngIf="tasks.length == 0 && selectedUserId != 0" class="list-group-item">No assigned tasks</div>
+      <div *ngIf="selectedUserId == 0" class="list-group-item">User not chosen</div>
       <li *ngFor="let task of tasks" class="list-group-item">
         <div class="task-header">
           <span class="task-info">{{ task.name }} - <strong>{{ task.status }}</strong></span>
@@ -34,6 +36,7 @@
   <div class="card mt-3">
     <div class="card-header bg-warning text-dark">Unassigned Tasks</div>
     <ul class="list-group list-group-flush">
+      <div *ngIf="unassignedTasks.length == 0" class="list-group-item">No unassigned tasks</div>
       <li *ngFor="let task of unassignedTasks" class="list-group-item">
         <div class="d-flex align-items-center w-100">
           <input type="checkbox" [value]="task.id" (change)="onTaskChecked(task.id, $event)">
