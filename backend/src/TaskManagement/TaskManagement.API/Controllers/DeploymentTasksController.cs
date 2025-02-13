@@ -15,9 +15,9 @@ namespace TaskManagement.API.Controllers
         public int TaskTypeId { get; } = 1;
 
         [HttpGet]
-        public async Task<PagedResponse<DeploymentTaskViewModel>> GetFilteredByTaskTypeAndSortedByDifficultyDesc([FromQuery] int pageNumber, Status? status, int pageSize = 10, int? userId = 0)
+        public async Task<ListResponse<DeploymentTaskViewModel>> GetFilteredByTaskTypeAndSortedByDifficultyDesc([FromQuery]Status? status, int? userId = 0)
         {
-            return await _service.GetFilteredByTaskTypeAndSortedByDifficultyDesc(pageNumber, pageSize, status, TaskTypeId, userId);
+            return await _service.GetFilteredByTaskTypeAndSortedByDifficultyDesc(status, TaskTypeId, userId);
         }
     }
 }

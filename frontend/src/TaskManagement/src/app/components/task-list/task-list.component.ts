@@ -36,7 +36,7 @@ export class TaskListComponent {
   @HostListener('window:beforeunload', ['$event'])
   onBeforeUnload(event: BeforeUnloadEvent) {
     if (this.selectedTaskIds.length > 0) {
-      event.preventDefault(); // Chrome requires this
+      event.preventDefault();
     }
   }
 }
