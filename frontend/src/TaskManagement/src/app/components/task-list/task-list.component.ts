@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import { Task } from '../../models/tasks/task.model';
 import {NgForOf} from '@angular/common';
 
@@ -30,6 +30,13 @@ export class TaskListComponent {
   assignSelectedTasks(): void {
     if (this.selectedUserId !== null) {
       this.assignTasks.emit({ taskIds: this.selectedTaskIds, userId: this.selectedUserId });
+    }
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeUnload(event: BeforeUnloadEvent) {
+    if (this.selectedTaskIds.length > 0) {
+      event.preventDefault(); // Chrome requires this
     }
   }
 }
