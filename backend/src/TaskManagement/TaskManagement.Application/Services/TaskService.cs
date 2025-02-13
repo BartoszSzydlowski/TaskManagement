@@ -17,17 +17,15 @@ namespace TaskManagement.Application.Services
         private readonly IMapper _mapper = mapper;
         private readonly IValidationService _validationService = validationService;
 
-        public async Task<PagedResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, Status? status, int taskTypeId, int? userId)
+        public async Task<ListResponse<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(Status? status, int taskTypeId, int? userId)
         {
-            var data = await _repository.GetFilteredByTaskTypeAndSortedByDifficultyDesc(pageNumber, pageSize, status, taskTypeId, userId);
+            var data = await _repository.GetFilteredByTaskTypeAndSortedByDifficultyDesc(status, taskTypeId, userId);
             var count = await _repository.GetTotalCount(taskTypeId, userId, status);
 
-            return new PagedResponse<T>
+            return new ListResponse<T>
             {
                 Data = _mapper.Map<List<T>>(data),
-                TotalCount = count,
-                PageNumber = pageNumber,
-                PageSize = pageSize
+                Total = count,
             };
         }
 

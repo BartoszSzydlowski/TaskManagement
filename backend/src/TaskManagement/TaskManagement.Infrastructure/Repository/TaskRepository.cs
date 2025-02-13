@@ -23,7 +23,7 @@ namespace TaskManagement.Infrastructure.Repository
                 );
         }
 
-        public async Task<List<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(int pageNumber, int pageSize, Status? status, int taskTypeId, int? userId)
+        public async Task<List<T>> GetFilteredByTaskTypeAndSortedByDifficultyDesc(Status? status, int taskTypeId, int? userId)
         {
             var result = _data.Tasks
                 .Where(x => 
@@ -31,15 +31,11 @@ namespace TaskManagement.Infrastructure.Repository
                     && x.User.Id == userId)
                     && taskTypeId == x.TaskType.Id
                     && (status == null || x.Status == status))
-                .OrderByDescending(x => x.Difficulty);
-
-            var pagedResult = result
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
+                .OrderByDescending(x => x.Difficulty)
                 .Cast<T>()
                 .ToList();
 
-            return await Task.FromResult(pagedResult);
+            return await Task.FromResult(result);
         }
 
         public async Task AddTaskToUser(int[] tasksIds, int userId)

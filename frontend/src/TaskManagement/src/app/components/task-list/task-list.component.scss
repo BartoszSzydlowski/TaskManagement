@@ -6,7 +6,18 @@
 
   .list-group-item {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .task-header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .task-header .task-info {
+      flex-grow: 1;
+    }
 
     input[type='checkbox'] {
       margin-right: 10px;

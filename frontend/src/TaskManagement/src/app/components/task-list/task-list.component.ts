@@ -1,12 +1,17 @@
 import {Component, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import { Task } from '../../models/tasks/task.model';
-import {NgForOf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {DeploymentTask} from '../../models/tasks/deployment-task.model';
+import {ImplementationTask} from '../../models/tasks/implementation-task.model';
+import {MaintenanceTask} from '../../models/tasks/maintenance-task.model';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   imports: [
-    NgForOf
+    NgForOf,
+    NgIf,
+    DatePipe
   ],
   styleUrls: ['./task-list.component.scss']
 })
@@ -36,7 +41,19 @@ export class TaskListComponent {
   @HostListener('window:beforeunload', ['$event'])
   onBeforeUnload(event: BeforeUnloadEvent) {
     if (this.selectedTaskIds.length > 0) {
-      event.preventDefault(); // Chrome requires this
+      event.preventDefault();
     }
+  }
+
+  isMaintenanceTask(task: Task): task is MaintenanceTask {
+    return (task as MaintenanceTask).dueDate !== undefined;
+  }
+
+  isImplementationTask(task: Task): task is ImplementationTask {
+    return (task as ImplementationTask).taskContent !== undefined;
+  }
+
+  isDeploymentTask(task: Task): task is DeploymentTask {
+    return (task as DeploymentTask).scope !== undefined;
   }
 }
