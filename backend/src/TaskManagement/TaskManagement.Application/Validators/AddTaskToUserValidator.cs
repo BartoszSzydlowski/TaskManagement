@@ -13,6 +13,14 @@ namespace TaskManagement.Application.Validators
 
         public override Task<ValidationResult> ValidateAsync(ValidationContext<AddTaskToUserRequest> context, CancellationToken cancellation = default)
         {
+            RuleFor(x => x.UserId)
+                .NotEmpty()
+                .WithMessage("User wasn't chosen");
+
+            RuleFor(x => x.TasksIds)
+                .Must(tasksIds => { return tasksIds.Length > 0; })
+                .WithMessage("Tasks weren't chosen");
+
             RuleFor(x => x)
                 .Must(MaxTenTasksPerRequest)
                 .WithMessage("Only ten tasks at once can be assigned");
@@ -34,6 +42,10 @@ namespace TaskManagement.Application.Validators
 
         private async Task<bool> CheckUserType(AddTaskToUserRequest request, CancellationToken cancellation = default)
         {
+            if (request.UserId == 0) 
+            {
+                return false;
+            };
             var user = await _userRepository.Get(request.UserId);
             var userType = user.UserType.Id;
             foreach (var id in request.TasksIds)
