@@ -2,7 +2,7 @@
 using TaskManagement.Application.Common.Responses;
 using TaskManagement.Application.Interfaces;
 using TaskManagement.Application.Requests;
-using TaskManagement.Application.ViewModels.TaskViewModel;
+using TaskManagement.Application.ViewModels.Task;
 
 namespace TaskManagement.API.Controllers
 {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using TaskManagement.Application.Mapping;
-using Entity = TaskManagement.Domain.Models;
+using TaskManagement.Domain.Models;
 
-namespace TaskManagement.Application.ViewModels.TaskViewModel
+namespace TaskManagement.Application.ViewModels.TaskTypeViewModel
 {
     public class TaskTypeViewModel : IMap
     {
@@ -12,7 +12,7 @@ namespace TaskManagement.Application.ViewModels.TaskViewModel
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entity.TaskType, TaskTypeViewModel>();
+            profile.CreateMap<TaskType, TaskTypeViewModel>();
         }
     }
 }
