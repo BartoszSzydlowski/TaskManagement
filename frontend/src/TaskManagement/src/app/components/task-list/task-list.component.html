@@ -3,8 +3,30 @@
     <div class="card-header bg-primary text-white">Assigned Tasks</div>
     <ul class="list-group list-group-flush">
       <li *ngFor="let task of tasks" class="list-group-item">
-        <span>{{ task.name }} - <strong>{{ task.status }}</strong></span>
-        <span class="badge bg-secondary ms-auto">Difficulty: {{ task.difficulty }}</span>
+        <div class="task-header">
+          <span class="task-info">{{ task.name }} - <strong>{{ task.status }}</strong></span>
+          <span class="badge bg-secondary ms-auto">Difficulty: {{ task.difficulty }}</span>
+        </div>
+
+        <ng-container *ngIf="isMaintenanceTask(task)">
+          <div class="mt-2">
+            <div class="text-muted">Due Date: {{ task.dueDate | date:'YYYY-MM-dd HH:mm' }}</div>
+            <div class="text-muted">Service List: {{ task.serviceList }}</div>
+            <div class="text-muted">Server List: {{ task.serverList }}</div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isImplementationTask(task)">
+          <div class="mt-2">
+            <div class="text-muted">Content: {{ task.taskContent }}</div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isDeploymentTask(task)">
+          <div class="mt-2">
+            <div class="text-muted">Scope: {{ task.scope }}</div>
+          </div>
+        </ng-container>
       </li>
     </ul>
   </div>
@@ -13,9 +35,33 @@
     <div class="card-header bg-warning text-dark">Unassigned Tasks</div>
     <ul class="list-group list-group-flush">
       <li *ngFor="let task of unassignedTasks" class="list-group-item">
-        <input type="checkbox" [value]="task.id" (change)="onTaskChecked(task.id, $event)">
-        <span>{{ task.name }} - <strong>{{ task.status }}</strong></span>
-        <span class="badge bg-secondary ms-auto">Difficulty: {{ task.difficulty }}</span>
+        <div class="d-flex align-items-center w-100">
+          <input type="checkbox" [value]="task.id" (change)="onTaskChecked(task.id, $event)">
+          <div class="task-header">
+            <span class="task-info">{{ task.name }} - <strong>{{ task.status }}</strong></span>
+            <span class="badge bg-secondary ms-auto">Difficulty: {{ task.difficulty }}</span>
+          </div>
+        </div>
+
+        <ng-container *ngIf="isMaintenanceTask(task)">
+          <div class="mt-2">
+            <div class="text-muted">Due Date: {{ task.dueDate | date:'YYYY-MM-dd HH:mm' }}</div>
+            <div class="text-muted">Service List: {{ task.serviceList }}</div>
+            <div class="text-muted">Server List: {{ task.serverList }}</div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isImplementationTask(task)">
+          <div class="mt-2">
+            <div class="text-muted">Content: {{ task.taskContent }}</div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isDeploymentTask(task)">
+          <div class="mt-2">
+            <div class="text-muted">Scope: {{ task.scope }}</div>
+          </div>
+        </ng-container>
       </li>
     </ul>
   </div>
