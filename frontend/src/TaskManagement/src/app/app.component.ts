@@ -65,6 +65,8 @@ export class AppComponent {
         this.errors = [];
         if (this.taskType) {
           this.getTasks(this.taskType, this.selectedUserId);
+          taskIds.length = 0;
+          userId = 0;
         }
         this.successMessage = "Tasks assigned successfully";
       },
