@@ -12,7 +12,7 @@ export class BaseService {
     return this.http.get<ApiResponse<T>>(`${this.apiUrl}/${url}`, { params });
   }
 
-  protected post<T>(url: string, body: T): Observable<any> {
+  protected post<T>(url: string, body: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/${url}`, body);
   }
 }
