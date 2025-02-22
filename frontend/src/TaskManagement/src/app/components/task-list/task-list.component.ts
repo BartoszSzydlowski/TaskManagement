@@ -1,5 +1,5 @@
-import {Component, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import { Task } from '../../models/tasks/task.model';
+import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import {Task} from '../../models/tasks/task.model';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {DeploymentTask} from '../../models/tasks/deployment-task.model';
 import {ImplementationTask} from '../../models/tasks/implementation-task.model';

@@ -1,7 +1,8 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { TaskTypeService } from '../../services/task-type.service';
+import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
+import {TaskTypeService} from '../../services/task-type.service';
 import {TaskType, TaskTypes} from '../../models/task-type.model';
 import {NgForOf} from '@angular/common';
+import {UnsubscribeHandler} from '../../handlers/unsubscribe/unsubscribe.handler';
 
 @Component({
   selector: 'app-task-type-dropdown',
@@ -11,15 +12,16 @@ import {NgForOf} from '@angular/common';
   ],
   styleUrls: ['./task-type-dropdown.component.scss']
 })
-export class TaskTypeDropdownComponent implements OnInit {
+export class TaskTypeDropdownComponent extends UnsubscribeHandler implements OnInit {
   taskTypes: TaskType[] = [];
   @Output() taskTypeSelected = new EventEmitter<TaskTypes>();
 
-  constructor(private taskTypeService: TaskTypeService) {}
+  private taskTypeService = inject(TaskTypeService);
 
   ngOnInit(): void {
-    this.taskTypeService.getAllTaskTypes().subscribe((types) => {
-      this.taskTypes = types.data;
+    this.taskTypeService.getAllTaskTypes()
+      .subscribe((types) => {
+        this.taskTypes = types.data;
     });
   }
 

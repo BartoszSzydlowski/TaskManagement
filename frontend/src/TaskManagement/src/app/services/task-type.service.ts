@@ -1,16 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { TaskType } from '../models/task-type.model';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {TaskType} from '../models/task-type.model';
 import {ApiResponse} from '../models/response/api-response.model';
+import {BaseService} from './base.service';
 
 @Injectable({ providedIn: 'root' })
-export class TaskTypeService {
-  private apiUrl = 'https://localhost:44383/api/TaskTypes/GetAll';
-
-  constructor(private http: HttpClient) {}
+export class TaskTypeService extends BaseService {
 
   getAllTaskTypes(): Observable<ApiResponse<TaskType>> {
-    return this.http.get<ApiResponse<TaskType>>(this.apiUrl);
+    return this.get<TaskType>("TaskTypes/GetAll");
   }
 }

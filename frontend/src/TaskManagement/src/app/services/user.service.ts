@@ -1,16 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {User} from '../models/user.model';
 import {ApiResponse} from '../models/response/api-response.model';
+import {BaseService} from './base.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
-  private apiUrl = 'https://localhost:44383/api/Users/GetAll';
-
-  constructor(private http: HttpClient) {}
+export class UserService extends BaseService {
 
   getAllUsers(): Observable<ApiResponse<User>> {
-    return this.http.get<ApiResponse<User>>(this.apiUrl);
+    return this.get<User>("Users/GetAll");
   }
 }

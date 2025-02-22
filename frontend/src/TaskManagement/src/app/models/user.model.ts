@@ -1,4 +1,4 @@
-import { UserType } from './user-type.model';
+import {UserType} from './user-type.model';
 
 export interface User {
   id: number;

@@ -1,7 +1,9 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
+import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
+import {UserService} from '../../services/user.service';
+import {User} from '../../models/user.model';
 import {NgForOf} from '@angular/common';
+import {takeUntil} from 'rxjs';
+import {UnsubscribeHandler} from '../../handlers/unsubscribe/unsubscribe.handler';
 
 @Component({
   selector: 'app-user-dropdown',
@@ -11,15 +13,17 @@ import {NgForOf} from '@angular/common';
   ],
   styleUrls: ['./user-dropdown.component.scss']
 })
-export class UserDropdownComponent implements OnInit {
+export class UserDropdownComponent extends UnsubscribeHandler implements OnInit {
   users: User[] = [];
   @Output() userSelected = new EventEmitter<number>();
 
-  constructor(private userService: UserService) {}
+  private userService = inject(UserService);
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe((users) => {
-      this.users = users.data;
+    this.userService.getAllUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((users) => {
+        this.users = users.data;
     });
   }
 
