@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {DeploymentTask} from '../models/tasks/deployment-task.model';
 import {ImplementationTask} from '../models/tasks/implementation-task.model';
 import {MaintenanceTask} from '../models/tasks/maintenance-task.model';
 import {BaseService} from './base.service';
+import {AddTaskToUserRequest} from '../models/api/requests/add-task-to-user-request';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService extends BaseService {
@@ -20,12 +20,7 @@ export class TaskService extends BaseService {
     return this.get<MaintenanceTask>('MaintenanceTasks/GetFilteredByTaskTypeAndSortedByDifficultyDesc', params);
   }
 
-  addTaskToUser(taskIds: number[], userId: number): Observable<any> {
-    return this.post<any>(`Tasks/AddTaskToUser`, { tasksIds: taskIds, userId });
+  addTaskToUser(request: AddTaskToUserRequest) {
+    return this.post<AddTaskToUserRequest>(`Tasks/AddTaskToUser`, request);
   }
-}
-
-export interface AddTaskToUser {
-  taskIds: number[];
-  userId: number;
 }

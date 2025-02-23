@@ -8,6 +8,7 @@ import {TaskListComponent} from './components/task-list/task-list.component';
 import {TaskTypes} from './models/task-type.model';
 import {UnsubscribeHandler} from './handlers/unsubscribe/unsubscribe.handler';
 import {takeUntil} from 'rxjs';
+import {AddTaskToUserRequest} from './models/api/requests/add-task-to-user-request';
 
 @Component({
   selector: 'app-root',
@@ -79,16 +80,16 @@ export class AppComponent extends UnsubscribeHandler {
     }
   }
 
-  assignTasksToUser({ taskIds, userId }: { taskIds: number[], userId: number }) {
-    this.taskService.addTaskToUser(taskIds, userId)
+  assignTasksToUser(request: AddTaskToUserRequest) {
+    this.taskService.addTaskToUser(request)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.errors = [];
           if (this.taskType) {
             this.getTasks(this.taskType, this.selectedUserId);
-            taskIds.length = 0;
-            userId = 0;
+            request.tasksIds.length = 0;
+            request.userId = 0;
           }
           this.successMessage = "Tasks assigned successfully";
         },

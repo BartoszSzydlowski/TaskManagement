@@ -4,6 +4,7 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {DeploymentTask} from '../../models/tasks/deployment-task.model';
 import {ImplementationTask} from '../../models/tasks/implementation-task.model';
 import {MaintenanceTask} from '../../models/tasks/maintenance-task.model';
+import {AddTaskToUserRequest} from '../../models/api/requests/add-task-to-user-request';
 
 @Component({
   selector: 'app-task-list',
@@ -19,7 +20,7 @@ export class TaskListComponent {
   @Input() tasks: Task[] = [];
   @Input() unassignedTasks: Task[] = [];
   @Input() selectedUserId: number | null = null;
-  @Output() assignTasks = new EventEmitter<{ taskIds: number[], userId: number }>();
+  @Output() assignTasks = new EventEmitter<AddTaskToUserRequest>();
 
   selectedTaskIds: number[] = [];
 
@@ -34,7 +35,7 @@ export class TaskListComponent {
 
   assignSelectedTasks(): void {
     if (this.selectedUserId !== null) {
-      this.assignTasks.emit({ taskIds: this.selectedTaskIds, userId: this.selectedUserId });
+      this.assignTasks.emit({ tasksIds: this.selectedTaskIds, userId: this.selectedUserId });
     }
   }
 

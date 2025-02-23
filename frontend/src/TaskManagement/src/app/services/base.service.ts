@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {inject} from '@angular/core';
 import {Observable} from 'rxjs';
-import {ApiResponse} from '../models/response/api-response.model';
+import {ApiResponse} from '../models/api/response/api-response.model';
 
 export class BaseService {
 
@@ -12,7 +12,7 @@ export class BaseService {
     return this.http.get<ApiResponse<T>>(`${this.apiUrl}/${url}`, { params });
   }
 
-  protected post<T>(url: string, body: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${url}`, body);
+  protected post<TRequest>(url: string, body: TRequest) {
+    return this.http.post<any>(`${this.apiUrl}/${url}`, body);
   }
 }
