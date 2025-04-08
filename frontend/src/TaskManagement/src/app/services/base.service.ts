@@ -12,7 +12,7 @@ export class BaseService {
     return this.http.get<ApiResponse<T>>(`${this.apiUrl}/${url}`, { params });
   }
 
-  protected post<TRequest>(url: string, body: TRequest) {
-    return this.http.post<any>(`${this.apiUrl}/${url}`, body);
+  protected post<T>(url: string, body: T) {
+    return this.http.post<T>(`${this.apiUrl}/${url}`, body);
   }
 }

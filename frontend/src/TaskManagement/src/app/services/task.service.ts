@@ -21,6 +21,6 @@ export class TaskService extends BaseService {
   }
 
   addTaskToUser(request: AddTaskToUserRequest) {
-    return this.post<AddTaskToUserRequest>(`Tasks/AddTaskToUser`, request);
+    return this.post(`Tasks/AddTaskToUser`, request);
   }
 }
